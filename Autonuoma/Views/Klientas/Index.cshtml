@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Org.Ktu.Isk.P175B602.Autonuoma.Models.Klientas>
+
+@{ ViewData["title"] = "Klientai"; }
+
+<div class="main-content-header">
+	<span class="title">@ViewData["title"]</span>
+	<span class="actions">
+		<a href="@Url.Action("Create")" class="btn btn-primary">
+			<i class="fa-solid fa-plus"></i> Sukurti naują
+		</a>
+	</span>
+</div>
+
+<div class="main-content-lst">
+	<table class="entity-list">
+		<thead>
+			<tr>
+				<th>@Html.DisplayNameFor(model => model.First().id_USER)</th>
+				<th>@Html.DisplayNameFor(model => model.First().email)</th>
+				<th>@Html.DisplayNameFor(model => model.First().name)</th>
+				<th>@Html.DisplayNameFor(model => model.First().surname)</th>
+				<th>@Html.DisplayNameFor(model => model.First().phoneNumber)</th>
+				<th>@Html.DisplayNameFor(model => model.First().address)</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+			{
+				<tr>
+					<td>@Html.DisplayFor(m => item.id_USER)</td>
+					<td>@Html.DisplayFor(m => item.email)</td>
+					<td>@Html.DisplayFor(m => item.name)</td>
+					<td>@Html.DisplayFor(m => item.surname)</td>
+					<td>@Html.DisplayFor(m => item.phoneNumber)</td>
+					<td>@Html.DisplayFor(m => item.address)</td>
+					<td>
+						<a href="@Url.Action("Edit", new { id = item.id_USER })" class="btn btn-primary">
+							<i class="fa-solid fa-pen-to-square"></i> Redaguoti
+						</a>
+						<a href="@Url.Action("Delete", new { id = item.id_USER })" class="btn btn-danger">
+							<i class="fa-solid fa-trash"></i> Šalinti
+						</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

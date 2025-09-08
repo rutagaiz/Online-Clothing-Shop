@@ -1,0 +1,72 @@
+﻿@model Org.Ktu.Isk.P175B602.Autonuoma.Models.Products.ProductsCE
+
+@{
+    ViewData["title"] = "Produkto šalinimas";
+}
+
+<div class="main-content-header">
+    <span class="title">@ViewData["title"]</span>
+    <span class="actions">
+        <a href="@Url.Action("Index")" class="btn btn-outline-primary btn-sm">
+            <i class="fa-solid fa-angles-left"></i> Atgal į sąrašą
+        </a>
+    </span>
+</div>
+
+<div class="main-content-ced">
+@using (Html.BeginForm(FormMethod.Post, new { @class = "entity-d" }))
+{
+    @Html.AntiForgeryToken()
+
+    <fieldset>
+        <legend class="confirm-msg">Ar tikrai norite šalinti šį produktą?</legend>
+
+        <dl class="row">
+            <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Products.id_PRODUCT)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(m => m.Products.id_PRODUCT)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Products.name)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(m => m.Products.name)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Products.cost)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(m => m.Products.cost)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Products.size)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(m => m.Products.size)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Products.country)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(m => m.Products.country)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Products.season)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(m => m.Products.season)</dd>
+        </dl>
+
+        @if (ViewData["deletionNotPermitted"] != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                <i class="fa-solid fa-circle-exclamation"></i> Šio produkto pašalinti negalima, nes 
+                jis turi ryšių su priklausomomis esybėmis.
+            </div>
+        }
+        else
+        {
+            <div class="form-group mt-3">
+                <button type="submit" 
+                        formaction="@Url.Action("DeleteConfirm", new { id = Model.Products.id_PRODUCT })" 
+                        class="btn btn-danger">
+                    <i class="fa-solid fa-trash"></i> Šalinti
+                </button>
+            </div>
+        }
+    </fieldset>
+}
+</div>
+
+<div class="main-content-footer">
+    <span class="title"></span>
+    <span class="actions">
+        <a href="@Url.Action("Index")" class="btn btn-outline-primary btn-sm">
+            <i class="fa-solid fa-angles-left"></i> Atgal į sąrašą
+        </a>
+    </span>
+</div>

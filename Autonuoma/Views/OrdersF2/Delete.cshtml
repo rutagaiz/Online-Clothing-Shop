@@ -1,0 +1,69 @@
+﻿@model Org.Ktu.Isk.P175B602.Autonuoma.Models.OrdersF2.OrdersCE
+
+@{
+    ViewData["title"] = "Užsakymo šalinimas (F2)";
+}
+
+<div class="main-content-header">
+    <span class="title">@ViewData["title"]</span>
+    <span class="actions">
+        <a href="@Url.Action("Index")" class="btn btn-outline-primary btn-sm">
+            <i class="fa-solid fa-angles-left"></i> Atgal į sąrašą
+        </a>
+    </span>
+</div>
+
+<div class="main-content-ced">
+@using (Html.BeginForm(FormMethod.Post, new { @class = "entity-d" }))
+{
+    @Html.AntiForgeryToken()
+
+    <fieldset>
+        <legend class="confirm-msg">Ar tikrai norite šalinti šią sutartį?</legend>
+
+        <dl class="row">
+            <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Orders.id_ORDER)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(m => m.Orders.id_ORDER)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Orders.startDate)</dt>
+            <dd class="col-sm-9">@Model.Orders.startDate.ToString("yyyy-MM-dd")</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Orders.endDate)</dt>
+            <dd class="col-sm-9">@Model.Orders.endDate.ToString("yyyy-MM-dd")</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Orders.totalPrice)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(m => m.Orders.totalPrice)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Orders.orderState)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(m => m.Orders.orderState)</dd>
+        </dl>
+
+        @if (ViewData["deletionNotPermitted"] != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                <i class="fa-solid fa-circle-exclamation"></i> Šios sutarties pašalinti negalima, 
+                nes ji yra <i>Patvirtinta</i> arba <i>Užbaigta</i>.
+            </div>
+        }
+        else
+        {
+            <div class="form-group mt-3">
+                <button type="submit" 
+                        formaction="@Url.Action("DeleteConfirm", new { id = Model.Orders.id_ORDER })" 
+                        class="btn btn-danger">
+                    <i class="fa-solid fa-trash"></i> Šalinti
+                </button>
+            </div>
+        }
+    </fieldset>
+}
+</div>
+
+<div class="main-content-footer">
+    <span class="title"></span>
+    <span class="actions">
+        <a href="@Url.Action("Index")" class="btn btn-outline-primary btn-sm">
+            <i class="fa-solid fa-angles-left"></i> Atgal į sąrašą
+        </a>
+    </span>
+</div>

@@ -1,0 +1,80 @@
+﻿@model Org.Ktu.Isk.P175B602.Autonuoma.Models.Klientas
+
+@{ ViewData["title"] = "Naujo kliento pridėjimas"; }
+
+<div class="main-content-header">
+	<span class="title">@ViewData["title"]</span>
+	<span class="actions">
+		<a 
+			href="@Url.Action("Index")" 
+			class="btn btn-outline-primary btn-sm"
+		>
+			<i class="fa-solid fa-angles-left"></i> Atgal į sarašą
+		</a>
+	</span>
+</div>
+
+<div class="main-content-ced">
+@using( Html.BeginForm(FormMethod.Post, new { @class = "entity-ce" }) )
+{
+	@Html.AntiForgeryToken()
+
+	@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+	<fieldset>
+		<div class="form-group">
+			@Html.LabelFor(m => m.email)
+			@Html.EditorFor(m => m.email)
+			@Html.ValidationMessageFor(m => m.email, "")
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.password)
+			@Html.EditorFor(m => m.password)
+			@Html.ValidationMessageFor(m => m.password, "")
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.name)
+			@Html.EditorFor(m => m.name)
+			@Html.ValidationMessageFor(m => m.name, "")
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.surname)
+			@Html.EditorFor(m => m.surname)
+			@Html.ValidationMessageFor(m => m.surname, "")
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.phoneNumber)
+			@Html.EditorFor(m => m.phoneNumber)
+			@Html.ValidationMessageFor(m => m.phoneNumber, "")
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.address)
+			@Html.EditorFor(m => m.address)
+			@Html.ValidationMessageFor(m => m.address, "")
+		</div>
+	</fieldset>
+
+	<div class="container-fluid d-flex d-row justify-content-end">
+		<button name="save" value="1" class="btn btn-success">
+			<i class="fa-solid fa-floppy-disk"></i> Išsaugoti
+		</button>
+	</div>
+}
+</div>
+
+<div class="main-content-footer">
+	<span class="title"></span>
+	<span class="actions">
+		<a 
+			href="@Url.Action("Index")" 
+			class="btn btn-outline-primary btn-sm"
+		>
+			<i class="fa-solid fa-angles-left"></i> Atgal į sarašą
+		</a>
+	</span>
+</div>

@@ -1,0 +1,76 @@
+﻿@model Org.Ktu.Isk.P175B602.Autonuoma.Models.Klientas
+
+@{ ViewData["title"] = "Kliento šalinimas"; }
+
+<div class="main-content-header">
+	<span class="title">@ViewData["title"]</span>
+	<span class="actions">
+		<a 
+			href="@Url.Action("Index")" 
+			class="btn btn-outline-primary btn-sm"
+		>
+			<i class="fa-solid fa-angles-left"></i> Atgal į sąrašą
+		</a>
+	</span>
+</div>
+
+<div class="main-content-ced">
+@using( Html.BeginForm(FormMethod.Post, new { @class = "entity-d" }) )
+{
+	@Html.AntiForgeryToken()
+
+	<fieldset>
+		<legend class="confirm-msg">Ar tikrai norite pašalinti šį klientą?</legend>
+
+		<dl>
+			<dt>@Html.DisplayNameFor(m => m.id_USER)</dt>
+			<dd>@Html.DisplayFor(m => m.id_USER)</dd>
+
+			<dt>@Html.DisplayNameFor(m => m.email)</dt>
+			<dd>@Html.DisplayFor(m => m.email)</dd>
+
+			<dt>@Html.DisplayNameFor(m => m.name)</dt>
+			<dd>@Html.DisplayFor(m => m.name)</dd>
+
+			<dt>@Html.DisplayNameFor(m => m.surname)</dt>
+			<dd>@Html.DisplayFor(m => m.surname)</dd>
+
+			<dt>@Html.DisplayNameFor(m => m.phoneNumber)</dt>
+			<dd>@Html.DisplayFor(m => m.phoneNumber)</dd>
+
+			<dt>@Html.DisplayNameFor(m => m.address)</dt>
+			<dd>@Html.DisplayFor(m => m.address)</dd>
+		</dl>
+
+		@if( ViewData["deletionNotPermitted"] != null )
+		{
+			<div class="fail-msg">
+				<i class="fa-solid fa-circle-exclamation"></i> Šio kliento pašalinti negalima, nes 
+				jis turi ryšių su kitomis esybėmis.
+			</div>
+		}
+		else
+		{
+			<div class="buttons">
+				<button
+					formaction="@Url.Action("DeleteConfirm", new { id = Model.id_USER })"
+					class="btn btn-danger"
+					style="white-space: nowrap;"
+				><i class="fa-solid fa-trash"></i> Šalinti</button>
+			</div>
+		}
+	</fieldset>
+}
+</div>
+
+<div class="main-content-footer">
+	<span class="title"></span>
+	<span class="actions">
+		<a 
+			href="@Url.Action("Index")" 
+			class="btn btn-outline-primary btn-sm"
+		>
+			<i class="fa-solid fa-angles-left"></i> Atgal į sąrašą
+		</a>
+	</span>
+</div>

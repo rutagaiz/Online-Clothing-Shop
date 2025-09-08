@@ -1,0 +1,120 @@
+﻿@model Org.Ktu.Isk.P175B602.Autonuoma.Models.OrdersReport.Report
+
+@{ ViewData["title"] = "Produktų užsakymų ataskaita"; }
+
+<div class="main-content-header">
+	<span class="title">@ViewData["title"]</span>
+</div>
+
+<div class="main-content-rep">
+@using(Html.BeginForm(FormMethod.Get, new { @class="rep" }))
+{
+	<p><strong>Parengta:</strong> @DateTime.Now.ToString("yyyy-MM-dd HH:mm")</p>
+
+	<div class="filter">
+		<div class="fields">
+			<div class="field">
+				<label>Data nuo:</label>
+				@Html.TextBoxFor(m => m.DateFrom, "{0:yyyy-MM-dd}", new { @class = "date-picker" })
+			</div>
+
+			<div class="field">
+				<label>Data iki:</label>
+				@Html.TextBoxFor(m => m.DateTo, "{0:yyyy-MM-dd}", new { @class = "date-picker" })
+			</div>
+
+			<div class="field">
+				<label>Kliento vardas / pavardė:</label>
+				@Html.TextBoxFor(m => m.ClientName, new { @class = "text-input" })
+			</div>
+
+			@if (ViewData["error"] != null)
+{
+	<div class="alert alert-danger" role="alert">
+		<i class="fa-solid fa-circle-exclamation"></i> @ViewData["error"]
+	</div>
+}
+
+			<div class="field">
+				<label>Užsakymo būsena:</label>
+				@Html.DropDownListFor(m => m.OrderState, Model.OrderStates, "-- Visi --", new { @class = "dropdown" })
+			</div>
+		</div>
+
+		<div class="buttons">
+			<button class="btn btn-success"><i class="fa-solid fa-filter"></i> Atrinkti</button>
+		</div>
+	</div>
+
+	<table class="report">
+	<thead>
+		<tr>
+			<th>Produktas</th>
+			<th>Spalva</th>
+			<th>Sezonas</th>
+			<th>Produktų kiekis</th>
+			<th>Bendra vertė</th>
+			<th>Vid. užsakymo vertė</th>
+			<th>Užsakymų kiekis</th>
+			<th>Užsakymo būsena</th>
+			<th>Paskutinis užsakymas</th>
+		</tr>
+	</thead>
+	<tbody>
+		@{
+			string currentCustomer = null;
+			var grouped = Model.Orders.GroupBy(x => x.UserFullName);
+		}
+
+		@foreach(var group in grouped)
+		{
+			var subtotalQuantity = group.Sum(x => x.QuantityOrdered);
+			var subtotalValue = group.Sum(x => x.TotalValue);
+			var avgOrder = group.Any() ? group.Average(x => x.AverageOrderValue) : 0;
+
+			<tr class="group-header">
+				<td colspan="9" style="font-weight:bold; text-align:center;">
+					@group.Key
+				</td>
+			</tr>
+
+			foreach(var o in group)
+			{
+				<tr>
+					<td>@o.ProductName</td>
+					<td>@o.Colour</td>
+					<td>@o.Season</td>
+					<td>@o.QuantityOrdered</td>
+					<td>@o.TotalValue.ToString("0.00")</td>
+					<td>@o.AverageOrderValue.ToString("0.00")</td>
+					<td>@o.OrderCount</td>
+					<td>@o.OrderStatus</td>
+					<td>@o.LastOrderDate?.ToString("yyyy-MM-dd")</td>
+				</tr>
+			}
+
+			<tr class="group-summary">
+			<td colspan="3" align="right"><b>Kliento suvestinė:</b></td>
+			<td><b>@subtotalQuantity</b></td>
+			<td><b>@subtotalValue.ToString("0.00")</b></td>
+			<td><b>@avgOrder.ToString("0.00")</b></td>
+			<td colspan="3"></td>
+		</tr>
+
+		}
+
+		<tr class="grand-total-header">
+			<td colspan="9" align="center"><b>Bendroji suvestinė</b></td>
+		</tr>
+		<tr>
+			<td colspan="3" align="right"><b>Bendras kiekis:</b></td>
+			<td>@Model.TotalQuantity</td>
+			<td><b>Bendra suma:</b></td>
+			<td>@Model.TotalSum.ToString("0.00")</td>
+			<td colspan="2"><b>Vid. užsakymas:</b> @Model.AverageOrderValue.ToString("0.00")</td>
+		</tr>
+	</tbody>
+</table>
+
+}
+</div>

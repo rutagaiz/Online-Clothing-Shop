@@ -1,0 +1,109 @@
+﻿@model Org.Ktu.Isk.P175B602.Autonuoma.Models.Products.ProductsCE
+
+@* this will also be used as page title in main layout *@
+@{ ViewData["title"] = "Produkto redagavimas"; }
+
+@* content header *@
+<div class="main-content-header">
+	<span class="title">@ViewData["title"]</span>
+	<span class="actions">
+		<a 
+			href="@Url.Action("Index")" 
+			class="btn btn-outline-primary btn-sm"
+		>
+			<i class="fa-solid fa-angles-left"></i> Atgal į sarašą
+		</a>
+	</span>
+</div>
+
+@* content itself *@
+<div class="main-content-ced">
+@using( Html.BeginForm(FormMethod.Post, new { @class="entity-ce" }) )
+{
+	@Html.AntiForgeryToken()
+	
+	@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+	
+	@* add hidden form fields for non-visible properties, otherwise they will get lost in code that handles button presses *@
+	@Html.HiddenFor(m => m.Products.id_PRODUCT)
+
+	<fieldset>
+		<div class="form-group">
+			@Html.LabelFor(m => m.Products.name)
+			@Html.EditorFor(m => m.Products.name)
+			@Html.ValidationMessageFor(m => m.Products.name, "")
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Products.cost)
+			@Html.EditorFor(m => m.Products.cost)
+			@Html.ValidationMessageFor(m => m.Products.cost, "")
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Products.description)
+			@Html.TextAreaFor(m => m.Products.description, new { @class = "form-control" })
+			@Html.ValidationMessageFor(m => m.Products.description, "")
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Products.season)
+			@Html.EditorFor(m => m.Products.season)
+			@Html.ValidationMessageFor(m => m.Products.season, "")
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Products.country)
+			@Html.EditorFor(m => m.Products.country)
+			@Html.ValidationMessageFor(m => m.Products.country, "")
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Products.size)
+			@Html.EditorFor(m => m.Products.size)
+			@Html.ValidationMessageFor(m => m.Products.size, "")
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Products.material)
+			@Html.EditorFor(m => m.Products.material)
+			@Html.ValidationMessageFor(m => m.Products.material, "")
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Products.fk_STOCK)
+			@Html.DropDownListFor(m => m.Products.fk_STOCK, Model.Lists.Stocks, "-- Pasirinkite sandėlį --", new { @class = "form-control" })
+			@Html.ValidationMessageFor(m => m.Products.fk_STOCK, "")
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Products.fk_CATEGORY)
+			@Html.DropDownListFor(m => m.Products.fk_CATEGORY, Model.Lists.Categories, "-- Pasirinkite kategoriją --", new { @class = "form-control" })
+			@Html.ValidationMessageFor(m => m.Products.fk_CATEGORY, "")
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Products.fk_COLOUR)
+			@Html.DropDownListFor(m => m.Products.fk_COLOUR, Model.Lists.Colors, "-- Pasirinkite spalvą --", new { @class = "form-control" })
+			@Html.ValidationMessageFor(m => m.Products.fk_COLOUR, "")
+		</div>
+	</fieldset>
+
+	<div class="container-fluid d-flex d-row justify-content-end">
+		<button name="save" value="1" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Išsaugoti</button>
+	</div>
+}
+</div>
+
+@* content footer *@
+<div class="main-content-footer">
+	<span class="title"></span>
+	<span class="actions">
+		<a 
+			href="@Url.Action("Index")" 
+			class="btn btn-outline-primary btn-sm"
+		>
+			<i class="fa-solid fa-angles-left"></i> Atgal į sarašą
+		</a>
+	</span>
+</div>
